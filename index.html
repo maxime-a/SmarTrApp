@@ -1,0 +1,450 @@
+<!--
+ * @ Author: Maxime Aymonin
+ * @ Create Time: 2022-02-17 21:53:25
+ * @ Modified by: Maxime Aymonin
+ * @ Modified time: 2023-07-18 22:43:56
+ * @ Description: User interface to bluetooth EcoTrap
+ -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="src/style.css">
+    
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/x-icon" href="ressources/Favicon_SmarTrap.ico">
+
+
+    <title>EcoBelt Bluetooth Toolbox</title>
+</head>
+
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                  <i class='bx bx-bug'></i>
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">BLE</span>
+                    <span class="version">Pandawa</span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+
+                <ul class="menu-links">
+                    <li class="nav-link">
+                      <a href="#connection">
+                          <i class='bx bx-bluetooth icon' ></i>
+                          <span class="text nav-text">Connection</span>
+                      </a>
+                    </li>
+                    
+                    <li class="nav-link">
+                        <a href="#dashboard">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                      <a href="#configuration">
+                          <i class='bx bx-cog icon'></i>
+                          <span class="text nav-text">Configuration</span>
+                      </a>
+                    </li>
+
+                    <li class="nav-link">
+                      <a href="#alarm">
+                          <i class='bx bx-alarm icon'></i>
+                          <span class="text nav-text">Alarm</span>
+                      </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#alerts">
+                            <i id='alerts-icon' class='bx bx-bell icon'></i>
+                            <span class="text nav-text">Alerts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
+        </div>
+
+    </nav>
+
+    <main>
+        
+        <section class="blocks" id="connection">
+           
+
+            <div class="text">Connection</div>
+            <div class="connection-container">
+                <div id="connection-btn" class='connection-widget' onclick="connection()">
+                    <i class='bx bx-x-circle connection-button' id="connection-img"></i>
+                </div>
+                <span class='connection-lbl' id='connection-text'>Not connected</span>
+            </div>
+
+        
+
+        </section>
+
+        <section class="blocks" id="dashboard">
+            <div class="text" id="dashboard-title">Dashboard</div>
+
+            <div class="horizontal-container measurements">
+                <div id="temperature">
+                    <i id="temperature-img" class='bx bxs-thermometer dashboard-icon'></i>
+                    <span id="temperature-value" class="inner-text">.. °C</span>
+                </div>
+                
+                <div id="alerts-dash">
+                    <a href="#alerts">
+                        <i id="alerts-img" class='bx bxs-bell dashboard-icon'></i>
+                        <div class="center btn-text">ALERTS</div>
+                    </a>
+                </div>
+
+                <div id="humidity">
+                    <i id="humidity-img" class='bx bx-droplet dashboard-icon clickable' ></i>
+                    <span id="humidity-value" class="inner-text">.. %</span>
+                </div>
+
+            </div>
+
+            <div class="horizontal-container measurements">
+
+                <div id="manual-btn" onclick="funcModeManual()">
+                    <i class='bx bx-mouse dashboard-icon clickable' id="manual-img"></i>
+                    <div class="center btn-text">MANUAL</div>
+                </div>
+
+                <div id="auto-btn" onclick="funcModeAuto()">
+                    <i class='bx bx-font dashboard-icon clickable' id="auto-img"></i>
+                    <div class="center btn-text">AUTO</div>
+                </div>
+
+            </div>
+
+            <div class="horizontal-container measurements">
+                <div id="fan-btn" onclick="fan()">
+                    <i class='bx bx-analyse dashboard-icon clickable' id="fan-img"></i>
+                    <div class="center btn-text">
+                        FAN
+                    </div>
+                    <i class='bx bx-lock dashboard-icon locker' id="lock-img"></i>
+                </div>
+                
+                <div id="co2-btn" onclick="co2()">
+                    <i class='bx bxs-flame dashboard-icon clickable' id="co2-img" ></i>
+                    <div class="center btn-text">
+                        CO2
+                    </div>
+                    <i class='bx bx-lock dashboard-icon locker' id="lock-img"></i>
+                </div>
+
+                <div id="light-btn" onclick="light()">
+                    <i class='bx bx-bulb dashboard-icon clickable' id="light-img" ></i>
+                    <div class="center btn-text">
+                        LIGHT
+                    </div>
+                    <i class='bx bx-lock dashboard-icon locker' id="lock-img"></i>
+                </div>
+            </div>
+
+            <div class="block-footer horizontal-container">
+                <span id="machineID" class="btn-text">Machine n°?</span>
+                <span id="voltage-value" class="btn-text">Voltage ??.?V</span>
+                <span id="networkID" class="btn-text">Network n°?</span>
+            </div>
+        </section>
+
+
+        <section class="blocks" id="configuration">
+            <div class="text">Configuration</div>
+            <div class="config-container" id="config-container">
+                <div class="inner-container" id="ranges">
+                    <div class="temp-ranges inner-container" id="temperature-ranges">
+                        <div  id="temp-title" class="ranges-title">
+                            Temperature °C
+                        </div>
+                        <div id="temp-min" class="num-input">
+                            <label class="btn-text" for="temp-min-input">Minimum</label>
+                            <div>
+                                <button id="temp-min-dec-input" class="range-btn" onclick="dec('min-temp')">-</button>
+                                <input id="temp-min-input" type="number" min="0" max="50" step="0.5" value="18">
+                                <button id="temp-min-inc-input" class="range-btn" onclick="inc('min-temp')">+</button>
+                            </div>
+                        </div>
+                        <div id="temp-max" class="num-input">
+                            <label class="btn-text" for="temp-max-input">Maximum</label>
+                            <div>
+                                <button id="temp-max-dec-input" class="range-btn" onclick="dec('max-temp')">-</button>
+                                <input id="temp-max-input" type="number" min="0" max="50" step="0.5" value="35">
+                                <button id="temp-max-inc-input" class="range-btn" onclick="inc('max-temp')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="temp-ranges inner-container" id="humidity-ranges">
+                        <div id="humidity-title" class="ranges-title">
+                            Humidity %
+                        </div>
+                        <div id="humidity-min" class="num-input">
+                            <label class="btn-text" for="hum-min-input">Minimum</label>
+                            <div>
+                                <button id="hum-min-dec-input" class="range-btn" onclick="dec('min-hum')">-</button>
+                                <input id="hum-min-input" type="number" min="0" max="100" step="1" value="20">
+                                <button id="hum-min-inc-input" class="range-btn" onclick="inc('min-hum')">+</button>
+                            </div>
+                        </div>
+                        <div id="hum-max" class="num-input">
+                            <label class="btn-text" for="hum-max-input">Maximum</label>
+                            <div>
+                                <button id="hum-max-dec-input" class="range-btn" onclick="dec('max-hum')">-</button>
+                                <input id="hum-max-input" type="number" min="0" max="100" step="1" value="90">
+                                <button id="hum-max-inc-input" class="range-btn" onclick="inc('max-hum')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="temp-tanges inner-container" id="ids">
+                    <div class="ranges-title">
+                        Identifiers
+                    </div>
+                    <div id="network-id" class="num-input">
+                        <label class="btn-text" for="network-input">Network</label>
+                        <div>
+                            <button class="range-btn" onclick="dec('network-id')">-</button>
+                            <input id="network-input" type="number" min="0" max="255" step="1" value="255">
+                            <button class="range-btn" onclick="inc('network-id')">+</button>
+                        </div>
+                    </div>
+                    <div id="machine-id" class="num-input">
+                        <label class="btn-text" for="machine-input">Machine</label>
+                        <div>
+                            <button class="range-btn" onclick="dec('machine-id')">-</button>
+                            <input id="machine-input" type="number" min="0" max="255" step="1" value="255">
+                            <button class="range-btn" onclick="inc('machine-id')">+</button>
+                        </div>
+                    </div>
+                    <div id="childs-counter" class="num-input">
+                        <label class="btn-text" for="childs-input">Childs</label>
+                        <div>
+                            <button id="childs-dec-input" class="range-btn" onclick="dec('childs-counter')">-</button>
+                            <input id="childs-input" type="number" min="0" max="255" step="1" value="0">
+                            <button id="childs-inc-input" class="range-btn" onclick="inc('childs-counter')">+</button>
+                        </div>
+                    </div>
+                    <div id="CO2-freq" class="num-input">
+                        <label class="btn-text" for="CO2-freq-input">CO2 freq</label>
+                        <div>
+                            <button id="CO2-freq-dec-input" class="range-btn" onclick="dec('CO2-freq')">-</button>
+                            <input id="CO2-freq-input" type="number" min="1" max="6" step="1" value="1">
+                            <button id="CO2-freq-inc-input" class="range-btn" onclick="inc('CO2-freq')">+</button>
+                        </div>
+                    </div>
+                    <div id="CO2-lvl" class="num-input">
+                        <label class="btn-text" for="CO2-lvl-input">ml/min</label>
+                        <div>
+                            <button id="CO2-lvl-dec-input" class="range-btn" onclick="dec('CO2-lvl')">-</button>
+                            <input id="CO2-lvl-input" type="number" min="25" max="1000" step="25" value="25">
+                            <button id="CO2-lvl-inc-input" class="range-btn" onclick="inc('CO2-lvl')">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-container" id="timers">
+                    <div class="ranges-title">
+                        Measurements period
+                    </div>
+                    <div id="measurements-period" class="num-input">
+                        <label class="btn-text" for="measurements">Seconds</label>
+                        <div>
+                            <button id="measurements-dec-input" class="range-btn" onclick="dec('measurements')">-</button>
+                            <input id="measurements-input" type="number" min="0" max="360" step="1" value="5">
+                            <button id="measurements-inc-input" class="range-btn" onclick="inc('measurements')">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner-container">
+                    <button class="save-button" onclick="saveConfig()">Set Value</button>
+                    <button class="save-button" onclick="sendstatus(2)">Default Value</button>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="blocks" id="alarm">
+            <div class="text">Alarms</div>
+            <div class="alarms-container">
+                    <div>
+                        Alarm 1
+                    </div>
+                    <div id="alarm1div">
+                        <div style="margin-top:10px;margin-bottom: 10px;">
+                        <label for="start">Start time 1:</label>
+                        <input type="time" id="start1" step="1">
+        
+                        <label for="end">End time 1:</label>
+                        <input type="time" id="end1" step="1">
+        
+                        <label class="switch">
+                            <input type="checkbox" id="alarm1Switch" onchange="disableAlarm1()">
+                            <div class="slider round">
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <table>
+                            <tr>
+                            <td style="width: 10%;">Mon</td>
+                            <td style="width: 10%;">Tue</td>
+                            <td style="width: 10%;">Wed</td>
+                            <td style="width: 10%;">Thu</td>
+                            <td style="width: 10%;">Fri</td>
+                            <td style="width: 10%;">Sat</td>
+                            <td style="width: 10%;">Sun</td>
+                            </tr>
+                            <tr>
+                            <td><input type="checkbox" id="mon1"></td>
+                            <td><input type="checkbox" id="tue1"></td>
+                            <td><input type="checkbox" id="wed1"></td>
+                            <td><input type="checkbox" id="thu1"></td>
+                            <td><input type="checkbox" id="fri1"></td>
+                            <td><input type="checkbox" id="sat1"></td>
+                            <td><input type="checkbox" id="sun1"></td>
+                            </tr>
+                        </table> 
+                    </div> 
+                </div> 
+                <div>
+                    Alarm 2
+                </div>       
+                <div id="alarm2div">
+                    <div style="margin-top:10px;margin-bottom: 10px;">
+                        <label for="start">Start time 2:</label>
+                        <input type="time" id="start2" step="1">
+            
+                        <label for="end">End time 2:</label>
+                        <input type="time" id="end2" step="1">
+            
+                        <label class="switch">
+                            <input type="checkbox" id="alarm2Switch" onchange="disableAlarm2()">
+                            <span class="slider round">
+                            </span>
+                        </label>
+                    </div>
+                    <div>
+                        <table>
+                            <tr>
+                            <td style="width: 10%;">Mon</td>
+                            <td style="width: 10%;">Tue</td>
+                            <td style="width: 10%;">Wed</td>
+                            <td style="width: 10%;">Thu</td>
+                            <td style="width: 10%;">Fri</td>
+                            <td style="width: 10%;">Sat</td>
+                            <td style="width: 10%;">Sun</td>
+                            </tr>
+                            <tr>
+                            <td><input type="checkbox" id="mon2"></td>
+                            <td><input type="checkbox" id="tue2"></td>
+                            <td><input type="checkbox" id="wed2"></td>
+                            <td><input type="checkbox" id="thu2"></td>
+                            <td><input type="checkbox" id="fri2"></td>
+                            <td><input type="checkbox" id="sat2"></td>
+                            <td><input type="checkbox" id="sun2"></td>
+                            </tr>
+                        </table>          
+                    </div>
+                </div>
+                <div>
+                    <button onClick='setTimes()' class="save-button">set times</button>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="blocks" id="alerts">
+            <div class="text">Alerts</div>
+
+            <div class="alerts-container">
+                <div class="alerts-text" id = "deadTrap">  </div>
+            </div>
+            <div class="alerts-container">
+                <div class="alerts-text" id = "deadCo2">  </div>
+            </div>
+            <div class="alerts-container">
+                <div class="alerts-text" id = "deadBat">  </div>
+            </div>
+            <div class="alerts-container">
+                <div class="alerts-text" id = "deadFan">  </div>
+            </div>       
+        </section>
+    
+    </main>
+
+    <script>
+        /* light/Dark mode management */
+        const body = document.querySelector('body'),
+        sidebar = body.querySelector('nav'),
+        toggle = body.querySelector(".toggle"),
+        modeSwitch = body.querySelector(".toggle-switch"),
+        modeText = body.querySelector(".mode-text");
+
+        toggle.addEventListener("click" , () =>{
+            sidebar.classList.toggle("close");
+        })
+
+        modeSwitch.addEventListener("click" , () =>{
+            body.classList.toggle("dark");
+            
+            if(body.classList.contains("dark")){
+                modeText.innerText = "Light mode";
+            }else{
+                modeText.innerText = "Dark mode";
+                
+            }
+        });
+    </script>
+
+    <script type="text/javascript" src="src/scripts/alarms.js"></script>
+    <script type="text/javascript" src="src/scripts/alerts.js"></script>
+    <script type="text/javascript" src="src/scripts/appli.js"></script>
+    <script type="text/javascript" src="src/scripts/config.js"></script>
+    <script type="text/javascript" src="src/scripts/connection.js"></script>
+    <script type="text/javascript" src="src/scripts/dashboard.js"></script>
+    <script type="text/javascript" src="src/scripts/global_declarations.js"></script>
+
+</body>
+</html>
