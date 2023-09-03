@@ -250,6 +250,7 @@ function handleDataMeasurements(event) {
     voltage = (buf[15]*255+buf[16])/1000;
     temperature = (buf[17]*255+buf[18])/10;
     humidity = buf[19];
+    co2_val = (buf[13]*255+buf[14]);
     mosquito = buf[12];
     // update UI
     document.getElementById('voltage-value').innerHTML  =   'Voltage ' + voltage.toFixed(1).toString() + 'V';
@@ -258,6 +259,7 @@ function handleDataMeasurements(event) {
     {
         document.getElementById('temperature-value').innerHTML  =   temperature.toFixed(1).toString() + '°C';
         document.getElementById('humidity-value').innerHTML     =   humidity.toString() + '%';
+        document.getElementById('co2-value').innerHTML          =   co2_val.toString() + 'ppm';
     }
     else
     {
@@ -350,8 +352,12 @@ function updatedashboard(){
             document.getElementById("humidity-img").style.color = "red";
             document.getElementById("humidity-value").style.color = "red";
         
+            document.getElementById("co2-txt").style.color = "red";
+            document.getElementById("co2-value").style.color = "red";
+
             document.getElementById('temperature-value').innerHTML  =   'OFF';
             document.getElementById('humidity-value').innerHTML     =   'OFF';
+            document.getElementById('co2-value').innerHTML          =   'OFF';
         
             document.getElementById("temp-title").style.color = "red";
             document.getElementById("humidity-title").style.color = "red";
@@ -364,6 +370,9 @@ function updatedashboard(){
             document.getElementById("humidity-img").style.color = 0x707070;
             document.getElementById("humidity-value").style.color = 0x707070;
         
+            document.getElementById("co2-txt").style.color = 0x707070;
+            document.getElementById("co2-value").style.color = 0x707070;
+
             document.getElementById("temp-title").style.color = 0x707070;
             document.getElementById("humidity-title").style.color = 0x707070;            
         }
