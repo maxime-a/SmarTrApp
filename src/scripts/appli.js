@@ -1,7 +1,7 @@
 /**
  * @ Author: Maxime Aymonin
  * @ Create Time: 2022-05-20 15:13:04
- * @ Modified by: Maxime Aymonin
+ * @ Modified by: Victor Derain
  * @ Modified time: 2023-07-18 22:04:40
  * @ Description: A web interface to an EcoTrap
  */
@@ -94,7 +94,7 @@ async function globalInit()
     generalWord = await readGeneral();
 
     document.getElementById("networkID").innerHTML = "Network n°" + generalWord[2];
-    document.getElementById("dashboard-title").innerHTML = "Dashboard of network n°" + generalWord[2] + ", machine n°" + generalWord[3];
+    //document.getElementById("dashboard-title").innerHTML = "Dashboard of network n°" + generalWord[2] + ", machine n°" + generalWord[3]+ ", nb of IWDG reset : " + statusWord[0];   //Done Later to include IWDG reset cpt
     document.getElementById("machineID").innerHTML = "Machine n°" + generalWord[3];
 
     let actuatorsWord = new Uint8Array(6);
@@ -134,7 +134,7 @@ async function globalInit()
     /* Status */
     let statusWord = new Uint8Array(2);
     statusWord = await readStatus();
-    
+    document.getElementById("dashboard-title").innerHTML = "Dashboard of network n°" + generalWord[2] + ", machine n°" + generalWord[3]+ ", nb of IWDG reset : " + statusWord[0];
     console.log("---------- READ STATUS -------------");
     console.log(statusWord[1]&0b00000001);
 

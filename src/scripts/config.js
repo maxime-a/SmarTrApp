@@ -1,7 +1,7 @@
 /**
  * @ Author: Maxime Aymonin
  * @ Create Time: 2022-07-02 12:06:15
- * @ Modified by: Maxime Aymonin
+ * @ Modified by: Victor Derain
  * @ Modified time: 2022-07-08 12:03:43
  * @ Description: Configuration part of the web interface to an EcoTrap
  */
@@ -142,10 +142,10 @@ function inc(text)
             break;
 
         case 'machine-id':
-            if(machineId<255)
+            if(machineId<100)
                 machineId+=1;
             else
-                machineId=255;
+                machineId=100;
             document.getElementById("machine-input").value = machineId.toFixed(0);
             updatedashboard();
             break;

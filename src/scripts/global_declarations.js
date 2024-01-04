@@ -1,7 +1,7 @@
 /**
  * @ Author: Maxime Aymonin
  * @ Create Time: 2022-07-02 11:56:55
- * @ Modified by: Maxime Aymonin
+ * @ Modified by: Victor Derain
  * @ Modified time: 2023-07-18 22:00:40
  * @ Description: Global declarations for the web interface to an EcoTrap
  */
@@ -35,7 +35,7 @@
  var minHum=20;
  var maxHum=90;
  var networkId=255;
- var machineId=255;
+ var machineId=100;
  var childsCounter=0;
  var co2_freq=0;
  var co2_lvl=0;
