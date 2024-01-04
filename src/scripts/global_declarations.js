@@ -17,9 +17,10 @@
  
  var characteristicStatus;
  var characteristicActuators;
- var characteristicCalendar;
- var characteristicSensors;
  var characteristicGeneral;
+ var characteristicSensors;
+ var characteristicCalendar;
+ var characteristicMeasurementNotif;
  var characteristicAlerts;
  
  var connectionToggle;

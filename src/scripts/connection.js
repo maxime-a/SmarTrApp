@@ -93,6 +93,7 @@ async function connect()
 
                 /* Measurements */
                 case "00000301-0000-1000-8000-00805f9b34fb":
+                    characteristicMeasurementNotif=characteristic;
                     characteristic.startNotifications();
                     sleep(500);
                     characteristic.oncharacteristicvaluechanged = handleDataMeasurements;

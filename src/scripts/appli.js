@@ -61,6 +61,15 @@ async function readActuators(){
 }
 
 /**
+ * Read and return the Measurement caracteristic
+ */
+ async function readMeasurement(){
+    var value = await characteristicMeasurementNotif.readValue();
+    let measurementWord = new Uint8Array(value.buffer);
+    return measurementWord;
+}
+
+/**
  * Read and return the alerts caracteristic
  */
 async function readAlerts(){
@@ -296,6 +305,18 @@ async function globalInit()
     document.getElementById("childs-input").value = childsCounter;
     co2_freq = generalWord[5];
     document.getElementById("CO2-freq-input").value = co2_freq;    
+
+    
+    let measurementWord = new Uint8Array(20);
+    measurementWord = await readMeasurement();
+
+    temperature = (measurementWord[17]*255+measurementWord[18])/10;
+    humidity = measurementWord[19];
+    co2_val = (measurementWord[13]*255+measurementWord[14]);
+    
+    document.getElementById('temperature-value').innerHTML  =   temperature.toFixed(1).toString() + '°C';
+    document.getElementById('humidity-value').innerHTML     =   humidity.toString() + '%';
+    document.getElementById('co2-value').innerHTML          =   co2_val.toString() + 'ppm';
 
     measurementsPeriod = sensorsWord[19];
     document.getElementById("measurements-input").value = measurementsPeriod;
